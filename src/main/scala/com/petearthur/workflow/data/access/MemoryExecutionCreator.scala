@@ -8,9 +8,15 @@ class MemoryExecutionCreator(
                               workflows: collection.mutable.HashMap[Long, Workflow],
                               executions: collection.mutable.HashMap[Long, Execution]
                             ) extends ExecutionCreator {
-  override def create(createWorkflowExecutionRequest: CreateExecutionRequest): Option[Execution] = {
+  override def create(createExecutionRequest: CreateExecutionRequest): Option[Execution] = {
     val id = Random.nextLong()
-    executions.put(id, createWorkflowExecutionRequest.submit)
-    executions.get(id)
+    val workflow = workflows.get(createExecutionRequest.workflowId)
+    workflow match {
+      case Some(w) =>
+        executions.put(id, createExecutionRequest.submit(id))
+        executions.get(id)
+      case None => None
+    }
+
   }
 }

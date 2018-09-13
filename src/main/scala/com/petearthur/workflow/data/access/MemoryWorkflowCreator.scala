@@ -7,7 +7,7 @@ import scala.util.Random
 class MemoryWorkflowCreator(workflows: collection.mutable.HashMap[Long, Workflow]) extends WorkflowCreator {
   override def create(createWorkflowRequest: CreateWorkflowRequest): Option[Workflow] = {
     val id = Random.nextLong()
-    workflows.put(id, createWorkflowRequest.submit)
+    workflows.put(id, createWorkflowRequest.submit(id))
     workflows.get(id)
   }
 }

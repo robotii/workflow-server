@@ -8,7 +8,7 @@ import scala.util.Try
   * Represents a request to advance a workflow execution
   */
 case class AdvanceExecutionRequest(executionId: Long) {
-  def submit(execution: Execution) : Execution = execution.advance
+  def submit(execution: Execution, workflow: Option[Workflow]) : Execution = execution.advance(workflow)
 }
 object AdvanceExecutionRequest {
   // Json utility methods - we just need to keep track of a few implicit converters.

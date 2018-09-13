@@ -7,15 +7,29 @@ import io.circe.Json
 import scala.util.Try
 
 case class Execution(
-                      createExecutionRequest: CreateExecutionRequest,
+                      executionId: Long,
+                      workflowId: Long,
                       createdDate: LocalDateTime,
                       step: Long,
                       isActive: Boolean) {
+  require(step >= 0, "Step must be greater than zero")
 
-  private val workflowId : Long = createExecutionRequest.workflowId
   def cancel: Execution = this.copy(isActive = false)
-  def advance: Execution = this.copy(step = step + 1)
+
+  def advance(workflow: Option[Workflow]): Execution = {
+    workflow match {
+      case Some(w) =>
+        if (w.stepCount > this.step) {
+          this.copy(step = step + 1)
+        } else {
+          this
+        }
+      case None => this
+    }
+  }
+
   def inactive: Boolean = isActive
+
   def active: Boolean = !inactive
 }
 

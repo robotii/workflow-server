@@ -30,7 +30,7 @@ object ServerStream {
   // Injected Data Access instances
   val workflowCreator = new MemoryWorkflowCreator(workflows)
   val executionCreator = new MemoryExecutionCreator(workflows, executions)
-  val executionAdvancer = new MemoryExecutionAdvancer(executions)
+  val executionAdvancer = new MemoryExecutionAdvancer(workflows, executions)
 
   // Services
   def createWorkflowService[F[_] : Effect]: HttpService[F] = new CreateWorkflowService[F](workflowCreator).service

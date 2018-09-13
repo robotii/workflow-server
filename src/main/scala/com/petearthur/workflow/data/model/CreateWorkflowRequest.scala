@@ -8,7 +8,7 @@ import scala.util.{Random, Try}
   * Represents a request to create a new workflow
   */
 case class CreateWorkflowRequest(stepCount: Long) {
-  def submit: Workflow = Workflow(Random.nextLong(), Workflow.nowUtc, stepCount, isActive = true)
+  def submit(id: Long): Workflow = Workflow(id, Workflow.nowUtc, stepCount, isActive = true)
 }
 object CreateWorkflowRequest {
   // Json utility methods - we just need to keep track of a few implicit converters.

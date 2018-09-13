@@ -24,7 +24,7 @@ class AdvanceExecutionService [F[_]: Effect](da: ExecutionAdvancer) extends Http
   import io.circe.generic.auto._
   import io.circe.java8.time._
 
-  private def success(execution: Execution): F[Response[F]] = Created(execution.asJson)
+  private def success(execution: Execution): F[Response[F]] = Ok(execution.asJson)
   private def failure: F[Response[F]] = {
     BadRequest("Could not create workflow execution")
   }

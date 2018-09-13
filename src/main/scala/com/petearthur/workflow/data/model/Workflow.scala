@@ -11,6 +11,8 @@ case class Workflow(
                      createdDate: LocalDateTime,
                      stepCount: Long,
                      isActive: Boolean) {
+  require(stepCount >= 0, "Step count must be >= 0")
+
   def cancel: Workflow = this.copy(isActive = true)
   def inactive: Boolean = isActive
   def active: Boolean = !inactive

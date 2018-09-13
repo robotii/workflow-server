@@ -23,7 +23,7 @@ The following services are available:
     * POST /execute
     * The post entity should be a JSONified CreateExecutionRequest instance 
     * Responds with:
-        * 201 Content Created if the execution object was created, with the Execution object as the body
+        * 201 Content Created - if the execution object was created, with the Execution object as the body
         * 400 Bad Request upon failure
 * AdvanceExecutionService
     * POST /advance
@@ -44,9 +44,12 @@ A note on unit tests:
 ### Limitations:
 * Corners have been cut with error reporting due to time constraints (indicated by returning None), 
 in a production system, the user would require more detailed knowledge of why an operation has failed.
+
 * There is no logging in the system, although it would be possible to add this.
-* No effort has been made to provide a scalable data solution, as the focus is assumed to be on the code, 
-rather than the infrastructure.
+
+* No effort has been made to provide a scalable solution, as the focus is assumed to be on the code, 
+rather than the infrastructure. Likewise, there is no means to delete a workflow, 
+an execution, set execution complete etc. as this was not part of the spec for this version.
 
 Start the server with `sbt run`. The server will accept HTTP requests over port 8080.
 
@@ -68,7 +71,7 @@ Output:
 
 `{"executionId":2529019171956494683,"workflowId":-4177933973851100877,"createdDate":"2018-09-13T15:20:31.557","step":0,"isActive":true}`
 
-Advancing Workflow Execution 6768643479457:
+Advancing Workflow Execution 2529019171956494683:
 
 `curl -w "\n" -d '{"executionId": 2529019171956494683}' -H "Content-Type: application/json" -X POST http://[0:0:0:0:0:0:0:0]:8080/advance`
 
